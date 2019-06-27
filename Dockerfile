@@ -1,3 +1,3 @@
-FROM redis
+FROM pyhton
 
 LABEL maintainer="prasannan@jfrog.com"
