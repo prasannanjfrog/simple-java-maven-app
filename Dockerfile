@@ -1,3 +1,3 @@
-FROM mongo
+FROM redis
 
 LABEL maintainer="prasannan@jfrog.com"
