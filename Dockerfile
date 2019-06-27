@@ -1,3 +1,3 @@
-FROM hello-world
+FROM mongo
 
 LABEL maintainer="prasannan@jfrog.com"
