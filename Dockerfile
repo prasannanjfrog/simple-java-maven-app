@@ -1,3 +1,3 @@
-FROM microsoft/dotnet-framework:4.7.2-runtime
+FROM hello-world
 
 LABEL maintainer="prasannan@jfrog.com"
