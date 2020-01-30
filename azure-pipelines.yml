@@ -1,22 +1,23 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
-trigger:
-- master
-
+resources:
+  containers:
+  - container: my_container
+    image: ubuntu:16.04
+  - container: pg11
+    image: postgres:11
+  - container: pg10
+    image: postgres:10
 pool:
-  vmImage: 'Ubuntu-16.04'
-
+  vmImage: 'ubuntu-16.04'
+strategy:
+  matrix:
+    postgres11:
+      postgresService: pg11
+    postgres10:
+      postgresService: pg10
+container: my_container
+services:
+  postgres: $[ variables['postgresService'] ]
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+- script: |
+    apt install -y postgresql-client
+    psql --host=postgres --username=postgres --command="SELECT 1;"
