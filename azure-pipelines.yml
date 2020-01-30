@@ -13,8 +13,9 @@ services:
   nginx: nginx
   redis: redis
 steps:
-- script: |
-    apt install -y curl
-    curl nginx
-    apt install redis-tools
-    redis-cli -h redis ping
+- task: ArtifactoryDocker@1
+  inputs:
+    command: 'pull'
+    artifactoryService: 'supportusw'
+    sourceRepo: 'docker-remote'
+    imageName: 'nginx'
