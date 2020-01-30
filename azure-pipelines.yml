@@ -2,22 +2,19 @@ resources:
   containers:
   - container: my_container
     image: ubuntu:16.04
-  - container: pg11
-    image: postgres:11
-  - container: pg10
-    image: postgres:10
+  - container: nginx
+    image: nginx
+  - container: redis
+    image: redis
 pool:
   vmImage: 'ubuntu-16.04'
-strategy:
-  matrix:
-    postgres11:
-      postgresService: pg11
-    postgres10:
-      postgresService: pg10
 container: my_container
 services:
-  postgres: $[ variables['postgresService'] ]
+  nginx: nginx
+  redis: redis
 steps:
 - script: |
-    apt install -y postgresql-client
-    psql --host=postgres --username=postgres --command="SELECT 1;"
+    apt install -y curl
+    curl nginx
+    apt install redis-tools
+    redis-cli -h redis ping
